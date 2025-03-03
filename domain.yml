@@ -1,0 +1,23 @@
+version: "3.1"
+
+intents:
+  - greet
+  - create_budget
+  - track_expense
+  - investment_tips
+
+responses:
+  utter_greet:
+    - text: "Hello! I'm your Finance Coach Chatbot. How can I assist you today? 😊"
+
+  utter_create_budget:
+    - text: "Sure! Let's create a budget. What's your monthly income and expense categories?"
+
+  utter_track_expense:
+    - text: "Got it! I will log that expense for you."
+
+  utter_investment_tips:
+    - text: "Here are some investment options for beginners:\n1. Stock Market 📈\n2. Bonds 📜\n3. Mutual Funds 💰\n4. Real Estate 🏠"
+
+actions:
+  - action_log_expense

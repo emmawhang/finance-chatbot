@@ -1,0 +1,22 @@
+version: "3.1"
+
+rules:
+- rule: Greet the user
+  steps:
+  - intent: greet
+  - action: utter_greet
+
+- rule: Respond to budget creation
+  steps:
+  - intent: create_budget
+  - action: utter_create_budget
+
+- rule: Log an expense
+  steps:
+  - intent: track_expense
+  - action: utter_track_expense
+
+- rule: Provide investment tips
+  steps:
+  - intent: investment_tips
+  - action: utter_investment_tips

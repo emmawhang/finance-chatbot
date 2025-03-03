@@ -1,0 +1,22 @@
+version: "3.1"
+
+stories:
+- story: greet the user
+  steps:
+  - intent: greet
+  - action: utter_greet
+
+- story: create a budget
+  steps:
+  - intent: create_budget
+  - action: utter_create_budget
+
+- story: track an expense
+  steps:
+  - intent: track_expense
+  - action: utter_track_expense
+
+- story: provide investment tips
+  steps:
+  - intent: investment_tips
+  - action: utter_investment_tips

@@ -1,0 +1,31 @@
+version: "3.1"
+
+nlu:
+- intent: greet
+  examples: |
+    - Hello
+    - Hi
+    - Hey
+    - Good morning
+    - Good evening
+
+- intent: create_budget
+  examples: |
+    - I want to create a budget
+    - Help me plan my expenses
+    - How do I manage my money?
+    - Can you help me allocate my income?
+
+- intent: track_expense
+  examples: |
+    - I spent $50 on groceries
+    - Log an expense for coffee
+    - Record that I paid $100 for rent
+    - Add a $25 expense for transportation
+
+- intent: investment_tips
+  examples: |
+    - What are some good investment options?
+    - Where should I invest my savings?
+    - Give me financial advice
+    - How do I start investing?
