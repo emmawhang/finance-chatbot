@@ -21,3 +21,15 @@ responses:
 
 actions:
   - action_log_expense
+
+slots:
+  amount:
+    type: float
+    # rasa 3.x and newer requires mappings 
+    mappings:
+      - type: from_text
+
+  category:
+    type: text
+    mappings:
+      - type: from_text

@@ -21,4 +21,4 @@ policies:
 - name: TEDPolicy
   max_history: 5
   epochs: 100
-assistant_id: 20250302-214235-potential-tanker
+assistant_id: 20250302-223829-relaxed-ensign

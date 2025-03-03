@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Personal Finance Chatbot</title>
+</head>
+<body>
+    <noscript>You need to enable JavaScript to run this app.</noscript>
+    <div id="root"></div>
+
+    <!-- Load Rasa Webchat -->
+    <script>
+        function loadChatbot() {
+            var script = document.createElement("script");
+            script.src = "https://cdn.jsdelivr.net/npm/rasa-webchat@1.0.1/lib/index.js";
+            script.async = true;
+            script.onload = () => {
+                console.log("✅ WebChat loaded!");
+    
+                setTimeout(() => {
+                    try {
+                        if (window.WebChat && window.WebChat.default) {
+                            console.log("✅ WebChat object found:", window.WebChat);
+                            window.WebChat.default.init({
+                                selector: "body",
+                                initPayload: "/greet",
+                                customData: { language: "en" },
+                                socketUrl: "http://localhost:5005",  // Ensure Rasa backend is running
+                                title: "Finance Bot",
+                                subtitle: "Track expenses & get investment tips",
+                                showCloseButton: true,
+                                fullScreenMode: false,
+                                tooltipPayload: "/help",
+                                tooltipText: "Need help? Chat with me!",
+                            });
+                        } else {
+                            console.error("❌ WebChat failed to initialize.");
+                        }
+                    } catch (e) {
+                        console.error("❌ Error initializing WebChat:", e);
+                    }
+                }, 1000);  // Delay initialization to ensure script loads
+            };
+    
+            script.onerror = () => {
+                console.error("❌ Failed to load WebChat script.");
+            };
+    
+            document.body.appendChild(script);
+        }
+    
+        window.onload = loadChatbot;
+    </script>
+    
+</body>
+</html>
