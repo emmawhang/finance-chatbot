@@ -1,59 +1,57 @@
 # Personal Finance Coach Chatbot 💸📊
 
-## Project Overview
-This chatbot helps users create budgets, track expenses, save money, and get investment tips. Built using Python, Flask, React.js, and Rasa.
+## 🚀 Project Overview
+This chatbot helps users create budgets, track expenses, save money, and get investment tips. Built using Python, Flask, React.js, and Rasa, the chatbot provides financial assistance through a conversational interface.
 
 ---
 
 ## 📂 Project Structure
 ```
-├── chatbot
-│   ├── data
-│   │   ├── nlu.yml
-│   │   ├── stories.yml
-│   │   └── domain.yml
-│   ├── actions.py
-│   └── config.yml
-├── backend
-│   ├── app.py
-│   └── database.py
-├── frontend
-│   ├── public
-│   ├── src
-│   │   ├── components
-│   │   │   └── BudgetForm.js
-│   │   └── App.js
-│   └── package.json
+finance-chatbot/
+├── chatbot/             # Rasa chatbot logic
+│   ├── data/           # Training data (nlu, stories, rules)
+│   ├── actions/        # Custom actions (API calls, database integration)
+│   ├── models/        # Trained chatbot models
+├── backend/           # Flask API for database & chatbot logic
+│   ├── app.py         # Runs backend server
+│   ├── database.py    # Database setup & expense tracking
+├── frontend/          # Web-based UI for chatbot interaction
+│   ├── public/
+│   ├── src/
+│   │   ├── components/
+│   │   │   ├── BudgetForm.js  # UI for budget entry
+│   │   ├── App.js             # Chatbot interface
+│   ├── package.json          # Frontend dependencies
 ├── .gitignore
 ├── README.md
-└── requirements.txt
+├── requirements.txt   # Python dependencies
+└── config.yml         # Rasa pipeline configuration
 ```
 
 ---
 
-## 🗂️ Installation & Setup
+## 🛠 Installation & Setup
 
-### 1. Clone the Repository
+### 1️⃣ Clone the Repository
 ```bash
-git clone https://github.com/YOUR-USERNAME/personal-finance-chatbot.git
-cd personal-finance-chatbot
+git clone https://github.com/emmawhang/finance-chatbot.git
+cd finance-chatbot
 ```
 
-### 2. Backend Setup (Python)
+### 2️⃣ Backend Setup (Python & Rasa)
 ```bash
 cd backend
 pip install -r requirements.txt
-python app.py
-```
-
-### 3. Chatbot Setup (Rasa)
-```bash
-cd chatbot
 rasa train
-rasa run
+rasa run --enable-api --cors "*"
 ```
 
-### 4. Frontend Setup (React.js)
+### 3️⃣ Chatbot Action Server Setup
+```bash
+rasa run actions
+```
+
+### 4️⃣ Frontend Setup (React.js)
 ```bash
 cd frontend
 npm install
@@ -62,97 +60,82 @@ npm start
 
 ---
 
-## 💾 Example Code
+## 🌍 Deployment
+### 1️⃣ Deploy Backend (Rasa) on Render
+1. Push your code to GitHub.
+2. Go to **[Render.com](https://dashboard.render.com/)** and create a **new web service**.
+3. Select your **GitHub repo** and configure:
+   - **Build Command:**
+     ```bash
+     pip install -r requirements.txt && rasa train
+     ```
+   - **Start Command:**
+     ```bash
+     rasa run --enable-api --cors "*"
+     ```
+4. Click **Deploy**. Your chatbot API will be available at:
+   ```
+   https://finance-chatbot.onrender.com
+   ```
 
-### `backend/app.py`
-```python
-from flask import Flask, request, jsonify
-app = Flask(__name__)
-
-@app.route('/add_expense', methods=['POST'])
-def add_expense():
-    data = request.get_json()
-    return jsonify({"message": "Expense added: " + str(data)})
-
-if __name__ == '__main__':
-    app.run(port=5000)
-```
-
-### `frontend/src/components/BudgetForm.js`
-```jsx
-import React, { useState } from 'react';
-
-const BudgetForm = () => {
-    const [income, setIncome] = useState('');
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        alert(`Income: $${income}`);
-    };
-    return (
-        <form onSubmit={handleSubmit}>
-            <label>Monthly Income:</label>
-            <input type="number" value={income} onChange={(e) => setIncome(e.target.value)} />
-            <button type="submit">Submit</button>
-        </form>
-    );
-};
-
-export default BudgetForm;
-```
-
-### `chatbot/data/nlu.yml`
-```yaml
-nlu:
-- intent: create_budget
-  examples: |
-    - I want to create a budget
-    - Help me set up my budget
-- intent: track_expense
-  examples: |
-    - I spent $50 on groceries
-    - Log an expense for transportation
-```
+### 2️⃣ Deploy Frontend (Web Chat UI) on GitHub Pages
+1. Modify `frontend/index.html`:
+   ```js
+   socketUrl: "https://finance-chatbot.onrender.com",
+   ```
+2. Commit and push changes to GitHub:
+   ```bash
+   git add .
+   git commit -m "Deploy frontend"
+   git push origin main
+   ```
+3. Enable **GitHub Pages** in repository **Settings > Pages**.
+4. Your chatbot UI will be available at:
+   ```
+   https://your-username.github.io/finance-chatbot/
+   ```
 
 ---
 
-## 🗃️ GitHub Workflow
+## 🚀 Features
+✔️ **Conversational Budgeting** – Users can set budgets based on income & expenses.  
+✔️ **Expense Tracking** – Users can log daily expenses.  
+✔️ **Investment Tips** – Provides financial advice based on user goals.  
+✔️ **Database Integration** – Stores expense records using SQLite.  
+✔️ **Web Chat UI** – Users can chat from a website interface.  
+✔️ **Cloud Deployment** – Accessible from anywhere using **Render & GitHub Pages**.  
 
-### Branching Strategy
-- **Main Branch:** Production-ready code.
-- **Feature Branches:** One per feature (e.g., `backend-expenses`, `frontend-ui`).
+---
 
-### Basic Commands
+## 🔗 API Endpoints
+### Send a Message to Chatbot
 ```bash
-git clone https://github.com/YOUR-USERNAME/personal-finance-chatbot.git
-git branch feature-branch
-git checkout feature-branch
-git add .
-git commit -m "Added expense tracking feature"
-git push origin feature-branch
+POST https://finance-chatbot.onrender.com/webhooks/rest/webhook
+```
+#### Example Request:
+```json
+{
+  "sender": "user123",
+  "message": "I spent $30 on coffee"
+}
+```
+#### Example Response:
+```json
+[
+  {
+    "recipient_id": "user123",
+    "text": "Got it! Your expense has been recorded."
+  }
+]
 ```
 
 ---
 
-## ✅ Deployment
-- Deploy the backend using **Heroku** or **AWS Lambda**.
-- Host the frontend using **GitHub Pages** or **Netlify**.
-- Use **GitHub Actions** for CI/CD.
-
----
-
-## 📢 Contribution Guidelines
-- Follow the branching strategy.
-- Write clear commit messages.
-- Document your code and update the `README.md`.
-
----
-
-## 🙌 Team Roles
-- **Project Manager:** Coordinates tasks, merges branches.
-- **Backend Developer:** Builds Flask API and database.
-- **Frontend Developer:** Designs React.js interface.
-- **Chatbot Developer:** Configures Rasa for conversations.
-- **Tester & Documenter:** Ensures functionality, writes documentation.
+## ✅ Contribution Guidelines
+- Follow the **branching strategy**.
+- Write **clear commit messages**.
+- Document any changes in **README.md**.
+- Use **GitHub Issues** for bug tracking.
 
 ---
 
@@ -160,5 +143,3 @@ git push origin feature-branch
 MIT License
 
 ---
-
-Now you're ready to collaborate and build your finance coach chatbot! 🚀
