@@ -3,6 +3,18 @@ require('dotenv').config();
 
 const express = require('express');
 const cors = require('cors');
+const bodyParser = require('body-parser');
+const chatRoutes = require('./api/routes');
+
+app.use(bodyParser.json());
+
+// Use the chatbot routes
+app.use('/api', chatRoutes);
+
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+    console.log(`Server is running on port ${PORT}`);
+});
 const routes = require('./api/routes');
 const config = require('./config');
 
